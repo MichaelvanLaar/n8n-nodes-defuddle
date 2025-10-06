@@ -135,10 +135,14 @@ The node returns a JSON object with the selected fields. When no custom output f
 
 ## Version History
 
+### 0.2.1
+
+- Fixed peer dependency conflict by downgrading jsdom to v24.x to match defuddle's requirements
+- Resolves npm install errors when installing via n8n Community Nodes
+
 ### 0.2.0
 
 - Dependency updates for security and compatibility
-- Updated jsdom to v27 (improved CSS selector engine and browser simulation)
 - Updated TypeScript to v5.9 (better performance and type checking)
 - Updated ESLint to v9 with flat config
 - Updated Prettier to v3.6
