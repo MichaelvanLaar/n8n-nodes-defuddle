@@ -1,4 +1,5 @@
 import {
+	IDataObject,
 	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
@@ -248,10 +249,12 @@ export class Defuddle implements INodeType {
 					}
 				}
 
-				const filteredResult: any = {};
+				const filteredResult: IDataObject = {};
+				const resultRecord = result as unknown as Record<string, unknown>;
 				outputFields.forEach((field) => {
-					if ((result as any)[field] !== undefined) {
-						filteredResult[field] = (result as any)[field];
+					const value = resultRecord[field];
+					if (value !== undefined) {
+						filteredResult[field] = value as IDataObject;
 					}
 				});
 

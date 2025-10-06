@@ -126,7 +126,7 @@ The node returns a JSON object with the selected fields. When no custom output f
 ## Compatibility
 
 - Requires n8n version 1.20.0 or above
-- Node.js 18 or higher recommended
+- Node.js 20 or higher required (as of version 0.2.0)
 
 ## Resources
 
@@ -134,6 +134,17 @@ The node returns a JSON object with the selected fields. When no custom output f
 - [Defuddle library](https://github.com/kepano/defuddle)
 
 ## Version History
+
+### 0.2.0
+
+- Dependency updates for security and compatibility
+- Updated jsdom to v27 (improved CSS selector engine and browser simulation)
+- Updated TypeScript to v5.9 (better performance and type checking)
+- Updated ESLint to v9 with flat config
+- Updated Prettier to v3.6
+- Updated gulp to v5
+- Improved type safety in code
+- **Breaking change**: Now requires Node.js 20 or higher
 
 ### 0.1.0
 
