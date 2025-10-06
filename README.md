@@ -135,6 +135,14 @@ The node returns a JSON object with the selected fields. When no custom output f
 
 ## Version History
 
+### 0.2.3
+
+- Documentation improvements and workflow standardization
+
+### 0.2.2
+
+- Updated README.md with complete version history
+
 ### 0.2.1
 
 - Fixed peer dependency conflict by downgrading jsdom to v24.x to match defuddle's requirements

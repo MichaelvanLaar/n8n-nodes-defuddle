@@ -30,16 +30,27 @@ npm run format         # Format code with Prettier
 ```
 
 ### Publishing
+
+**IMPORTANT:** Follow this exact workflow when publishing a new version:
+
+1. **Update README.md** - Add the new version section to the "Version History" with complete changelog
+2. **Commit README changes** - Commit the README update before bumping version
+3. **Bump version** - Use `npm version patch|minor|major` (this updates package.json, package-lock.json, and creates a git commit + tag automatically)
+4. **Publish to npm** - Run `npm publish` (this runs prepublishOnly hook: build + lint)
+5. **Push to GitHub** - Run `git push && git push --tags` to push commits and the version tag
+6. **Create GitHub release** - Use `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` with the same changelog text from README.md
+
+**Files that must be updated:**
+- `README.md` - Add version section to "Version History" (do this FIRST, before version bump)
+- `package.json` and `package-lock.json` - Automatically updated by `npm version`
+
+**Note:**
+- The `npm version` command automatically creates a git commit and tag, so commit README.md changes BEFORE running it
+- Always use the same changelog text in both README.md and the GitHub release description for consistency
+
 ```bash
 npm run prepublishOnly # Runs before publishing (build + lint)
 ```
-
-**Important:** When publishing a new version:
-1. Update the version history in README.md with the new version and changelog
-2. Use `npm version patch|minor|major` to bump version and create git tag
-3. Publish to npm with `npm publish`
-4. Push commits and tags to GitHub with `git push && git push --tags`
-5. Create a GitHub release using `gh release create` with the version notes from README.md
 
 ## Architecture
 
