@@ -135,6 +135,10 @@ The node returns a JSON object with the selected fields. When no custom output f
 
 ## Version History
 
+### 0.2.4
+
+- Add LICENSE.md file
+
 ### 0.2.3
 
 - Documentation improvements and workflow standardization
