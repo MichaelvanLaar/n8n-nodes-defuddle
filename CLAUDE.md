@@ -34,6 +34,13 @@ npm run format         # Format code with Prettier
 npm run prepublishOnly # Runs before publishing (build + lint)
 ```
 
+**Important:** When publishing a new version:
+1. Update the version history in README.md with the new version and changelog
+2. Use `npm version patch|minor|major` to bump version and create git tag
+3. Publish to npm with `npm publish`
+4. Push commits and tags to GitHub with `git push && git push --tags`
+5. Create a GitHub release using `gh release create` with the version notes from README.md
+
 ## Architecture
 
 ### Node Structure
