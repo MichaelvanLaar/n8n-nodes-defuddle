@@ -135,6 +135,14 @@ The node returns a JSON object with the selected fields. When no custom output f
 
 ## Version History
 
+### 0.2.5
+
+- Update development dependencies to latest versions:
+  - @typescript-eslint/eslint-plugin: 8.45.0 → 8.46.1
+  - @typescript-eslint/parser: 8.45.0 → 8.46.1
+  - typescript-eslint: 8.45.0 → 8.46.1
+  - eslint-plugin-n8n-nodes-base: 1.16.3 → 1.16.4
+
 ### 0.2.4
 
 - Add LICENSE.md file
