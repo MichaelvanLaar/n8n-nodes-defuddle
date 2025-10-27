@@ -170,7 +170,7 @@ This ensures all commits maintain code quality and passing tests.
 
 ## Version History
 
-### 0.3.0
+### 0.3.0 (Upcoming)
 
 - Add comprehensive Jest testing infrastructure
   - 47 test cases covering all node features
