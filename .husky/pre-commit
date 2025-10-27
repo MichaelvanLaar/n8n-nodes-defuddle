@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Pre-commit hook: Run lint → test → build
+# Fast-fail order: lint (fastest) → test (medium) → build (slowest)
+echo "Running pre-commit checks..."
+
+echo "1/3: Linting..."
+npm run lint || { echo "❌ Linting failed. Fix errors and try again."; exit 1; }
+
+echo "2/3: Running tests..."
+npm test || { echo "❌ Tests failed. Fix tests and try again."; exit 1; }
+
+echo "3/3: Building..."
+npm run build || { echo "❌ Build failed. Fix build errors and try again."; exit 1; }
+
+echo "✅ All pre-commit checks passed!"

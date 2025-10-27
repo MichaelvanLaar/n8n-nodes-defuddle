@@ -1,0 +1,21 @@
+<!-- Malformed HTML for testing parser robustness -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Malformed HTML Test
+    <!-- Missing closing title tag -->
+    <meta charset="UTF-8">
+</head>
+<body>
+    <article>
+        <h1>Article with Broken HTML</h1>
+        <p>This paragraph is not closed properly
+        <div>Nested incorrectly
+        <p>Another paragraph without closing tag
+
+        <span>Unclosed span
+
+        <h2>Subheading</h2>
+        <p>This paragraph has proper structure.</p>
+    </article>
+    <!-- Missing closing body and html tags -->

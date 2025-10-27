@@ -63,6 +63,8 @@ After deployment, create separate PR to:
 - Use `openspec archive [change] --skip-specs --yes` for tooling-only changes
 - Run `openspec validate --strict` to confirm the archived change passes checks
 
+**For Releases:** When archiving changes that should be published as a new version, use the comprehensive release checklist at `.claude/release-checklist.md` which covers version bumping, npm publishing, GitHub releases, and post-release verification.
+
 ## Before Any Task
 
 **Context Checklist:**

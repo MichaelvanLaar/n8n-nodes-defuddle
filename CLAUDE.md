@@ -48,14 +48,54 @@ npm run lintfix        # Auto-fix linting issues
 npm run format         # Format code with Prettier
 ```
 
+### Testing
+```bash
+npm test               # Run test suite with Jest
+npm run test:watch     # Run tests in watch mode for development
+npm run test:coverage  # Generate coverage report
+```
+
+**Testing Strategy:**
+- **Framework**: Jest with ts-jest for TypeScript support
+- **Location**: Tests are co-located with node code in `nodes/Defuddle/__tests__/`
+- **Fixtures**: HTML test files in `nodes/Defuddle/__tests__/fixtures/`
+- **Coverage Target**: >80% code coverage
+- **Pre-commit Hooks**: Husky automatically runs lint → test → build before each commit
+
+**Test Categories:**
+1. **Feature Tests**: Content extraction, format conversion (HTML/Markdown), output filtering, Defuddle options
+2. **Security Tests**: JSDOM sandboxing, script blocking, XSS prevention
+3. **Error Handling Tests**: Missing input, invalid HTML, continueOnFail behavior
+4. **Edge Cases**: Large documents, Unicode, malformed HTML, empty content
+5. **Integration Tests**: IExecuteFunctions mocking, multiple items processing, pairedItem behavior
+
+**Testing Conventions:**
+- All node features must have corresponding tests
+- Use fixtures for HTML test data (easier to maintain than inline strings)
+- Mock IExecuteFunctions manually for precise control over test scenarios
+- Security-critical features (JSDOM sandboxing) must have dedicated test coverage
+
 ### Publishing
 
-**IMPORTANT:** Follow this exact workflow when publishing a new version:
+**IMPORTANT:** When ready to publish a new version, use the comprehensive release checklist:
 
-1. **Update README.md** - Add the new version section to the "Version History" with complete changelog
+**See: `.claude/release-checklist.md`**
+
+This checklist covers the complete release workflow including:
+- Pre-release verification (tests, linting, security audit)
+- Version determination (semantic versioning guide)
+- Documentation updates (README.md version history)
+- Testing & QA (unit tests, coverage, manual testing in n8n)
+- Publishing to npm (with prepublishOnly hooks)
+- GitHub release creation
+- Post-release verification
+- Rollback procedures (if needed)
+
+**Quick Reference Workflow:**
+1. **Update README.md** - Add the new version section to "Version History" with complete changelog
 2. **Commit README changes** - Commit the README update before bumping version
 3. **Bump version** - Use `npm version patch|minor|major` (this updates package.json, package-lock.json, and creates a git commit + tag automatically)
-4. **Publish to npm** - Run `npm publish` (this runs prepublishOnly hook: build + lint)
+4. **Publish to npm** - Run `npm publish` (this runs prepublishOnly hook: build + lint + test)
 5. **Push to GitHub** - Run `git push && git push --tags` to push commits and the version tag
 6. **Create GitHub release** - Use `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` with the same changelog text from README.md
 
@@ -68,7 +108,7 @@ npm run format         # Format code with Prettier
 - Always use the same changelog text in both README.md and the GitHub release description for consistency
 
 ```bash
-npm run prepublishOnly # Runs before publishing (build + lint)
+npm run prepublishOnly # Runs before publishing (build + lint + test)
 ```
 
 ## Architecture

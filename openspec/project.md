@@ -29,6 +29,9 @@ This is an n8n community node package that extracts main content from webpages u
 - **typescript-eslint** 8.45.0 - TypeScript linting plugin
 - **Prettier** 3.6.2 - Code formatting
 - **eslint-plugin-n8n-nodes-base** - n8n-specific linting rules
+- **Jest** 30.2.0 - Testing framework
+- **ts-jest** 29.4.5 - TypeScript transformer for Jest
+- **Husky** - Git hooks for pre-commit automation
 
 ## Project Conventions
 
@@ -80,10 +83,29 @@ This is an n8n community node package that extracts main content from webpages u
 
 ### Testing Strategy
 
-**Current State:**
-- No automated tests currently implemented
-- Testing done manually via n8n workflow execution
-- Linting enforced via `npm run lint` (runs in prepublishOnly)
+**Testing Framework:**
+- **Framework**: Jest with ts-jest for TypeScript support
+- **Test Location**: Tests co-located with node in `nodes/Defuddle/__tests__/`
+- **Fixtures**: HTML test files stored in `nodes/Defuddle/__tests__/fixtures/`
+- **Coverage Target**: >80% code coverage (measured with Jest coverage reports)
+
+**Test Automation:**
+- Pre-commit hooks (Husky) automatically run: lint → test → build
+- Publishing workflow (prepublishOnly) runs: build + lint + test
+- Test failures block commits and publishing
+
+**Test Categories:**
+1. **Feature Tests**: Content extraction, format conversion (HTML/Markdown), output filtering, Defuddle options
+2. **Security Tests**: JSDOM sandboxing validation, script execution blocking, XSS prevention
+3. **Error Handling**: Missing input, invalid HTML, NodeOperationError scenarios, continueOnFail behavior
+4. **Edge Cases**: Large HTML documents, Unicode characters, malformed HTML, empty content
+5. **Integration Tests**: IExecuteFunctions mocking, multiple items processing, pairedItem indexing
+
+**Testing Conventions:**
+- Use HTML fixtures for test data (easier to maintain than inline strings)
+- Mock IExecuteFunctions manually for precise control over test scenarios
+- Security-critical features (JSDOM sandboxing) require dedicated test coverage
+- All node features must have corresponding tests
 
 **Linting Requirements:**
 - Must pass ESLint with n8n community node rules before publishing
@@ -96,11 +118,17 @@ This is an n8n community node package that extracts main content from webpages u
 
 ### Git Workflow
 
-**Version Publishing Workflow (STRICT ORDER):**
+**Version Publishing Workflow:**
+
+For complete release workflow including pre-release verification, testing, and post-release validation, use the comprehensive checklist:
+
+**See: `.claude/release-checklist.md`**
+
+**Quick Reference (STRICT ORDER):**
 1. Update `README.md` - Add new version section to "Version History" with complete changelog
 2. Commit README changes - Commit BEFORE version bump
 3. Run `npm version patch|minor|major` - Auto-updates package.json, package-lock.json, creates git commit + tag
-4. Run `npm publish` - Publishes to npm (runs prepublishOnly: build + lint)
+4. Run `npm publish` - Publishes to npm (runs prepublishOnly: build + lint + test)
 5. Run `git push && git push --tags` - Push commits and version tag to GitHub
 6. Create GitHub release - Use `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` with same changelog from README
 
@@ -112,7 +140,8 @@ This is an n8n community node package that extracts main content from webpages u
 - `npm version` automatically creates git commit and tag
 - Always commit README.md changes BEFORE running `npm version`
 - Use same changelog text in both README.md and GitHub release for consistency
-- Never skip prepublishOnly hooks (runs build + lint automatically)
+- Never skip prepublishOnly hooks (runs build + lint + test automatically)
+- Pre-commit hooks (Husky) ensure all checks pass before committing
 
 ## Domain Context
 
@@ -152,6 +181,7 @@ This is an n8n community node package that extracts main content from webpages u
 - Icons must be copied to dist/ via gulp task (not handled by tsc)
 - Build must complete successfully before publishing (enforced via prepublishOnly)
 - Linting must pass before publishing
+- All tests must pass before publishing (enforced via prepublishOnly and pre-commit hooks)
 
 **Package Management:**
 - Use `--legacy-peer-deps` when updating dependencies (jsdom peer dependency mismatch with defuddle)

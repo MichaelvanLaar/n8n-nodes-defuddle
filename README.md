@@ -128,12 +128,63 @@ The node returns a JSON object with the selected fields. When no custom output f
 - Requires n8n version 1.20.0 or above
 - Node.js 20 or higher required (as of version 0.2.0)
 
+## Development
+
+### Testing
+
+This package includes comprehensive automated tests to ensure reliability and prevent regressions.
+
+**Running Tests:**
+```bash
+npm test                # Run test suite
+npm run test:watch      # Run tests in watch mode for development
+npm run test:coverage   # Generate coverage report
+```
+
+**Testing Framework:**
+- Jest with TypeScript support (ts-jest)
+- 47 test cases covering all node features
+- >80% code coverage target
+- Automated pre-commit hooks via Husky
+
+**Test Categories:**
+1. Feature tests (content extraction, format conversion, output filtering)
+2. Security tests (JSDOM sandboxing, XSS prevention, script blocking)
+3. Error handling (missing input, invalid HTML, continueOnFail)
+4. Edge cases (large documents, Unicode, malformed HTML)
+5. Integration tests (n8n interface mocking, batch processing)
+
+### Quality Assurance
+
+Pre-commit hooks automatically run:
+1. Linting (ESLint with n8n community node rules)
+2. Tests (Jest test suite)
+3. Build (TypeScript compilation and icon copying)
+
+This ensures all commits maintain code quality and passing tests.
+
 ## Resources
 
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
 - [Defuddle library](https://github.com/kepano/defuddle)
 
 ## Version History
+
+### 0.3.0
+
+- Add comprehensive Jest testing infrastructure
+  - 47 test cases covering all node features
+  - Feature tests: content extraction, format conversion, output filtering, Defuddle options
+  - Security tests: JSDOM sandboxing, script blocking, XSS prevention
+  - Error handling tests: missing input, invalid HTML, continueOnFail behavior
+  - Edge case tests: large documents, Unicode, malformed HTML, empty content
+  - Integration tests: IExecuteFunctions mocking, batch processing, pairedItem indexing
+- Add Husky pre-commit hooks
+  - Automatically run lint → test → build before each commit
+  - Prevent broken code from entering repository
+- Update publishing workflow to include automated testing (prepublishOnly now runs: build + lint + test)
+- Add testing documentation to README.md and CLAUDE.md
+- Update project.md with comprehensive testing strategy
 
 ### 0.2.5
 

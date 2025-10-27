@@ -1,0 +1,17 @@
+<!-- HTML with XSS attempts to test JSDOM sandboxing -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Malicious Content Test</title>
+</head>
+<body>
+    <article>
+        <h1>Article with Malicious Content</h1>
+        <p>This article contains XSS attempts that should be safely handled.</p>
+        <img src="x" onerror="alert('XSS')">
+        <a href="javascript:alert('XSS')">Click me</a>
+        <script>alert('XSS');</script>
+        <p>Legitimate content should still be extracted safely.</p>
+    </article>
+</body>
+</html>
