@@ -10,6 +10,7 @@ This checklist should be followed every time a new version is ready for release.
 - [ ] No security vulnerabilities (`npm audit`)
 - [ ] Build completes successfully (`npm run build`)
 - [ ] Test coverage meets target (>80%, currently ~100%)
+- [ ] **Check `.gitignore` file**: Review and update if recent changes require ignoring additional files/directories
 
 ## Version & Documentation Updates
 
@@ -43,6 +44,8 @@ This checklist should be followed every time a new version is ready for release.
   - Check keywords are relevant for npm/n8n discoverability
   - Confirm all dependencies are at correct versions
   - Ensure `files` array includes only `dist` directory
+
+- [ ] **Review `.gitignore`**: Ensure all build artifacts, temporary files, and sensitive data are properly ignored
 
 - [ ] **Update other documentation** if needed:
   - CLAUDE.md (project context for AI assistants)
@@ -258,6 +261,7 @@ gh release create...  # Create GitHub release
 - Update version history **throughout development**, not just at release time
 - Package requires **Node.js 20+** and **n8n 1.20.0+**
 - Only **`dist/` directory** is published to npm (configured in package.json `files`)
+- **Review `.gitignore`** before each release to ensure proper file exclusion
 
 ## Testing Requirements
 
