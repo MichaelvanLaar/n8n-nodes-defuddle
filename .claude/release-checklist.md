@@ -11,6 +11,7 @@ This checklist should be followed every time a new version is ready for release.
 - [ ] Build completes successfully (`npm run build`)
 - [ ] Test coverage meets target (>80%, currently ~100%)
 - [ ] Check `.gitignore` file: Review and update if recent changes require ignoring additional files/directories
+- [ ] Check for archivable OpenSpec changes: Run `openspec list` to verify if any completed changes need archiving
 
 ## Version & Documentation Updates
 
@@ -78,6 +79,38 @@ This checklist should be followed every time a new version is ready for release.
   - Test error handling with invalid input
   - Confirm output field filtering works
   - Test all Defuddle options (removeImages, removeSelectors, debug)
+
+## OpenSpec Management
+
+- [ ] **Archive completed OpenSpec changes**:
+
+  ```bash
+  openspec list
+  ```
+
+  - If any completed changes are listed, archive them:
+
+    ```bash
+    openspec archive <change-id> --yes
+    ```
+
+    Or if specs are already updated manually:
+
+    ```bash
+    openspec archive <change-id> --yes --skip-specs
+    ```
+
+  - Verify archive was created:
+
+    ```bash
+    openspec validate --all --strict
+    ```
+
+- [ ] **Stage OpenSpec changes** (if any were archived):
+
+  ```bash
+  git add openspec/
+  ```
 
 ## Commit & Version Bump
 
@@ -278,6 +311,7 @@ gh release create...  # Create GitHub release
 - Package requires **Node.js 20+** and **n8n 1.20.0+**
 - Only **`dist/` directory** is published to npm (configured in package.json `files`)
 - **Review `.gitignore`** before each release to ensure proper file exclusion
+- **Archive OpenSpec changes** as part of release to keep specs synchronized with released code
 
 ## Testing Requirements
 
