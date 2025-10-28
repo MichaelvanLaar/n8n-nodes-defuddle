@@ -10,7 +10,7 @@ This checklist should be followed every time a new version is ready for release.
 - [ ] No security vulnerabilities (`npm audit`)
 - [ ] Build completes successfully (`npm run build`)
 - [ ] Test coverage meets target (>80%, currently ~100%)
-- [ ] **Check `.gitignore` file**: Review and update if recent changes require ignoring additional files/directories
+- [ ] Check `.gitignore` file: Review and update if recent changes require ignoring additional files/directories
 
 ## Version & Documentation Updates
 
@@ -45,7 +45,7 @@ This checklist should be followed every time a new version is ready for release.
   - Confirm all dependencies are at correct versions
   - Ensure `files` array includes only `dist` directory
 
-- [ ] **Review `.gitignore`**: Ensure all build artifacts, temporary files, and sensitive data are properly ignored
+- [ ] Review `.gitignore`: Ensure all build artifacts, temporary files, and sensitive data are properly ignored
 
 - [ ] **Update other documentation** if needed:
   - CLAUDE.md (project context for AI assistants)
@@ -84,11 +84,13 @@ This checklist should be followed every time a new version is ready for release.
 **IMPORTANT:** Commit README.md changes BEFORE running `npm version`
 
 - [ ] **Stage README.md and other documentation changes**:
+
   ```bash
   git add README.md CLAUDE.md openspec/project.md [other-modified-files]
   ```
 
 - [ ] **Commit documentation updates**:
+
   ```bash
   git commit -m "Update documentation for version X.Y.Z release
 
@@ -99,14 +101,17 @@ This checklist should be followed every time a new version is ready for release.
 
   Co-Authored-By: Claude <noreply@anthropic.com>"
   ```
+
   - Pre-commit hook will run: lint → test → build automatically
 
 - [ ] **Bump version with npm** (creates commit + tag automatically):
+
   ```bash
   npm version patch   # for 0.x.Y (bug fixes)
   npm version minor   # for 0.X.0 (new features)
   npm version major   # for X.0.0 (breaking changes)
   ```
+
   - This updates package.json and package-lock.json
   - Creates git commit: "X.Y.Z"
   - Creates git tag: "vX.Y.Z"
@@ -114,16 +119,20 @@ This checklist should be followed every time a new version is ready for release.
 ## Publishing to npm
 
 - [ ] **Verify prepublishOnly will succeed**:
+
   ```bash
   npm run prepublishOnly
   ```
+
   - Runs: build + lint + test
   - All must pass or publish will fail
 
 - [ ] **Publish to npm**:
+
   ```bash
   npm publish
   ```
+
   - Automatically runs prepublishOnly hook
   - Publishes `dist/` directory to npm registry
   - Package appears at: https://www.npmjs.com/package/@michaelvanlaar/n8n-nodes-defuddle
@@ -137,9 +146,11 @@ This checklist should be followed every time a new version is ready for release.
 ## Push to GitHub
 
 - [ ] **Push commits and tags to GitHub**:
+
   ```bash
   git push && git push --tags
   ```
+
   - Pushes the version commit created by `npm version`
   - Pushes the vX.Y.Z tag
 
@@ -151,6 +162,7 @@ This checklist should be followed every time a new version is ready for release.
 ## GitHub Release
 
 - [ ] **Create GitHub release with changelog**:
+
   ```bash
   gh release create vX.Y.Z --title "vX.Y.Z" --notes "$(cat <<'EOF'
   ## Changes
@@ -172,9 +184,11 @@ This checklist should be followed every time a new version is ready for release.
 ## Post-Release Verification
 
 - [ ] **Test installation from npm**:
+
   ```bash
   npm install @michaelvanlaar/n8n-nodes-defuddle
   ```
+
   - In a test n8n installation
 
 - [ ] **Test via n8n Community Nodes UI**:
@@ -205,11 +219,13 @@ This checklist should be followed every time a new version is ready for release.
 If critical issues are discovered after publishing:
 
 1. **Deprecate broken version on npm**:
+
    ```bash
    npm deprecate @michaelvanlaar/n8n-nodes-defuddle@X.Y.Z "Critical bug - use version X.Y.Z+1 instead"
    ```
 
 2. **Delete GitHub release** (optional):
+
    ```bash
    gh release delete vX.Y.Z
    ```
@@ -274,6 +290,7 @@ gh release create...  # Create GitHub release
 ## Dependencies
 
 This project uses:
+
 - **Jest** for testing
 - **ts-jest** for TypeScript support in tests
 - **Husky** for Git hooks
