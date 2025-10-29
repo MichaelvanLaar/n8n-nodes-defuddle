@@ -190,3 +190,4 @@ This package must comply with n8n community node requirements:
 - Directory naming: `nodes/{NodeName}/`
 - Icons placed alongside node file
 - Package metadata in `package.json` under `n8n` key
+- Always use Conventional Commits and gitmoji when creating git commit messages.
