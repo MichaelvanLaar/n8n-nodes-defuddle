@@ -163,6 +163,85 @@ Pre-commit hooks automatically run:
 
 This ensures all commits maintain code quality and passing tests.
 
+## Claude Code Integration
+
+This project integrates Claude Code with Context7 MCP for enhanced AI-assisted development, providing access to current n8n documentation.
+
+### Setup
+
+#### 1. Environment File Setup
+
+Create an environment configuration file:
+
+```bash
+cp .env.example .env
+```
+
+This generates a new `.env` file in your project root where you'll store your API credentials.
+
+#### 2. API Key Registration
+
+Obtain your authentication key from [context7.com](https://context7.com), then add it to your `.env`:
+
+```
+CONTEXT7_API_KEY=your-api-key-here
+```
+
+The project `.gitignore` automatically prevents this file from being committed to version control.
+
+#### 3. MCP Configuration
+
+The project includes a `.mcp.json` file that pre-configures the MCP server settings. No additional setup is needed—the integration is ready once your `.env` file contains a valid API key.
+
+### Context7 Slash Commands
+
+This project includes slash commands for [Claude Code](https://claude.ai/code) that provide quick access to n8n documentation via Context7.
+
+#### `/context7:n8n [topic]`
+
+Pulls official n8n documentation into the conversation context to assist with development tasks.
+
+**Usage:**
+
+```
+/context7:n8n
+```
+
+Fetches general n8n documentation relevant to the current task (e.g., community node development, node structure, testing).
+
+**With optional topic:**
+
+```
+/context7:n8n node development
+/context7:n8n credentials
+/context7:n8n IExecuteFunctions
+/context7:n8n parameters
+```
+
+Focuses the documentation retrieval on a specific topic.
+
+**When to use:**
+- Developing or maintaining n8n community nodes
+- Working with n8n APIs (IExecuteFunctions, INodeType, INodeProperties, etc.)
+- Troubleshooting node-related issues
+- Understanding n8n conventions and best practices
+- Working with credentials, webhooks, or polling triggers
+- Checking for API changes or updated patterns
+
+### Recommended Usage Scenarios
+
+Use Context7 integration when:
+- Learning unfamiliar or newly-released n8n APIs
+- Resolving complex node development challenges
+- Implementing features requiring deep knowledge of n8n internals
+- Confirming best practices or verifying API changes
+- Working with credentials, webhooks, or polling triggers
+
+Avoid using it for:
+- Following established code patterns already present in the codebase
+- Standard refactoring tasks
+- Similar features already implemented elsewhere
+
 ## Resources
 
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)

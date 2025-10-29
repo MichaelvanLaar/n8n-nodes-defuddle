@@ -1,14 +1,17 @@
 <!-- OPENSPEC:START -->
+
 # OpenSpec Instructions
 
 These instructions are for AI assistants working in this project.
 
 Always open `@/openspec/AGENTS.md` when the request:
+
 - Mentions planning or proposals (words like proposal, spec, change, plan)
 - Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
 - Sounds ambiguous and you need the authoritative spec before coding
 
 Use `@/openspec/AGENTS.md` to learn:
+
 - How to create and apply change proposals
 - Spec format and conventions
 - Project structure and guidelines
@@ -26,22 +29,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is an n8n community node package that extracts main content from webpages using the [Defuddle](https://github.com/kepano/defuddle) library. It provides a single node that processes HTML input and returns cleaned, readable content (similar to browser reader mode).
 
 **Requirements:**
+
 - Node.js 20 or higher (enforced via `engines` in package.json)
 - n8n version 1.20.0 or above
 
 ## Build and Development Commands
 
 ### Building
+
 ```bash
 npm run build          # Compile TypeScript and copy icons to dist/
 npm run dev            # Watch mode for TypeScript compilation
 ```
 
 The build process consists of two steps:
+
 1. `tsc` - Compiles TypeScript from `nodes/**/*.ts` to `dist/`
 2. `gulp build:icons` - Copies SVG/PNG icons from `nodes/` to `dist/nodes/`
 
 ### Linting and Formatting
+
 ```bash
 npm run lint           # Check TypeScript files for errors
 npm run lintfix        # Auto-fix linting issues
@@ -49,6 +56,7 @@ npm run format         # Format code with Prettier
 ```
 
 ### Testing
+
 ```bash
 npm test               # Run test suite with Jest
 npm run test:watch     # Run tests in watch mode for development
@@ -56,6 +64,7 @@ npm run test:coverage  # Generate coverage report
 ```
 
 **Testing Strategy:**
+
 - **Framework**: Jest with ts-jest for TypeScript support
 - **Location**: Tests are co-located with node code in `nodes/Defuddle/__tests__/`
 - **Fixtures**: HTML test files in `nodes/Defuddle/__tests__/fixtures/`
@@ -63,6 +72,7 @@ npm run test:coverage  # Generate coverage report
 - **Pre-commit Hooks**: Husky automatically runs lint → test → build before each commit
 
 **Test Categories:**
+
 1. **Feature Tests**: Content extraction, format conversion (HTML/Markdown), output filtering, Defuddle options
 2. **Security Tests**: JSDOM sandboxing, script blocking, XSS prevention
 3. **Error Handling Tests**: Missing input, invalid HTML, continueOnFail behavior
@@ -70,6 +80,7 @@ npm run test:coverage  # Generate coverage report
 5. **Integration Tests**: IExecuteFunctions mocking, multiple items processing, pairedItem behavior
 
 **Testing Conventions:**
+
 - All node features must have corresponding tests
 - Use fixtures for HTML test data (easier to maintain than inline strings)
 - Mock IExecuteFunctions manually for precise control over test scenarios
@@ -82,6 +93,7 @@ npm run test:coverage  # Generate coverage report
 **See: `.claude/release-checklist.md`**
 
 This checklist covers the complete release workflow including:
+
 - Pre-release verification (tests, linting, security audit)
 - Version determination (semantic versioning guide)
 - Documentation updates (README.md version history)
@@ -92,6 +104,7 @@ This checklist covers the complete release workflow including:
 - Rollback procedures (if needed)
 
 **Quick Reference Workflow:**
+
 1. **Update README.md** - Add the new version section to "Version History" with complete changelog
 2. **Commit README changes** - Commit the README update before bumping version
 3. **Bump version** - Use `npm version patch|minor|major` (this updates package.json, package-lock.json, and creates a git commit + tag automatically)
@@ -100,10 +113,12 @@ This checklist covers the complete release workflow including:
 6. **Create GitHub release** - Use `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` with the same changelog text from README.md
 
 **Files that must be updated:**
+
 - `README.md` - Add version section to "Version History" (do this FIRST, before version bump)
 - `package.json` and `package-lock.json` - Automatically updated by `npm version`
 
 **Note:**
+
 - The `npm version` command automatically creates a git commit and tag, so commit README.md changes BEFORE running it
 - Always use the same changelog text in both README.md and the GitHub release description for consistency
 
@@ -130,6 +145,7 @@ The package follows n8n's community node architecture:
 - **n8n-workflow** (^1.20.0): n8n SDK for node development (peer dependency)
 
 **Dev Dependencies:**
+
 - **TypeScript** (^5.9.3): Upgraded from 4.9 for better performance and type checking
 - **ESLint** (^9.37.0): Uses flat config format (`eslint.config.mjs`)
 - **typescript-eslint** (^8.45.0): ESLint plugin for TypeScript
@@ -148,6 +164,7 @@ The package follows n8n's community node architecture:
 ### Content Format Options
 
 The node supports three output modes controlled by `contentFormat` parameter:
+
 - `html`: Returns content as HTML (default)
 - `markdown`: Converts content to Markdown (replaces `content` field)
 - `both`: Returns both HTML in `content` and Markdown in `contentMarkdown`
@@ -155,6 +172,7 @@ The node supports three output modes controlled by `contentFormat` parameter:
 ### Security Considerations
 
 JSDOM is configured with security hardening:
+
 - `runScripts: undefined` - Never execute JavaScript
 - `resources: undefined` - Block external resource loading
 - `pretendToBeVisual: false` - Minimal parsing overhead
@@ -170,6 +188,7 @@ JSDOM is configured with security hardening:
 ## ESLint Configuration
 
 Uses **ESLint 9 flat config** format in `eslint.config.mjs`:
+
 - Based on TypeScript ESLint recommended type-checked rules
 - Includes `plugin:n8n-nodes-base/community` rules:
   - `node-dirname-against-convention`: Enforces n8n directory naming
@@ -184,10 +203,14 @@ Uses **ESLint 9 flat config** format in `eslint.config.mjs`:
 ## n8n Node Standards
 
 This package must comply with n8n community node requirements:
+
 - Nodes must implement `INodeType` interface
 - Class name should match the node name in description
 - File naming: `{NodeName}.node.ts`
 - Directory naming: `nodes/{NodeName}/`
 - Icons placed alongside node file
 - Package metadata in `package.json` under `n8n` key
+
+## Notes
+
 - Always use Conventional Commits and gitmoji when creating git commit messages.
