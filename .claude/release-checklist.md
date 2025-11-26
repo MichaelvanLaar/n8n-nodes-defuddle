@@ -149,34 +149,7 @@ This checklist should be followed every time a new version is ready for release.
   - Creates git commit: "X.Y.Z"
   - Creates git tag: "vX.Y.Z"
 
-## Publishing to npm
-
-- [ ] **Verify prepublishOnly will succeed**:
-
-  ```bash
-  npm run prepublishOnly
-  ```
-
-  - Runs: build + lint + test
-  - All must pass or publish will fail
-
-- [ ] **Publish to npm**:
-
-  ```bash
-  npm publish
-  ```
-
-  - Automatically runs prepublishOnly hook
-  - Publishes `dist/` directory to npm registry
-  - Package appears at: https://www.npmjs.com/package/@michaelvanlaar/n8n-nodes-defuddle
-
-- [ ] **Verify npm publication** (1-2 minutes after publish):
-  - Visit: https://www.npmjs.com/package/@michaelvanlaar/n8n-nodes-defuddle
-  - Confirm new version number is displayed
-  - Check README renders correctly on npm page
-  - Verify last publish time is recent
-
-## Push to GitHub
+## Push to GitHub & Trigger Automated Publishing
 
 - [ ] **Push commits and tags to GitHub**:
 
@@ -186,11 +159,28 @@ This checklist should be followed every time a new version is ready for release.
 
   - Pushes the version commit created by `npm version`
   - Pushes the vX.Y.Z tag
+  - **This automatically triggers the GitHub Actions publish workflow** (.github/workflows/publish.yml)
 
 - [ ] **Verify GitHub push**:
   - Visit: https://github.com/MichaelvanLaar/n8n-nodes-defuddle
   - Confirm new commit appears
   - Check tag appears in tags list
+
+## Monitor Automated Publishing
+
+- [ ] **Watch GitHub Actions workflow**:
+  - Visit: https://github.com/MichaelvanLaar/n8n-nodes-defuddle/actions
+  - Click on the running "Publish Package" workflow
+  - Monitor the steps: checkout → build → lint → test → publish
+  - Wait for green checkmark (usually 2-3 minutes)
+  - If workflow fails, check logs and fix issues before retrying
+
+- [ ] **Verify npm publication** (1-2 minutes after workflow succeeds):
+  - Visit: https://www.npmjs.com/package/@michaelvanlaar/n8n-nodes-defuddle
+  - Confirm new version number is displayed
+  - Check README renders correctly on npm page
+  - Verify last publish time is recent
+  - Verify provenance attestation badge appears (OIDC benefit)
 
 ## GitHub Release
 
@@ -257,18 +247,57 @@ If critical issues are discovered after publishing:
    npm deprecate @michaelvanlaar/n8n-nodes-defuddle@X.Y.Z "Critical bug - use version X.Y.Z+1 instead"
    ```
 
-2. **Delete GitHub release** (optional):
+2. **Delete GitHub release and tag** (optional, prevents confusion):
 
    ```bash
-   gh release delete vX.Y.Z
+   gh release delete vX.Y.Z --yes
+   git push --delete origin vX.Y.Z  # Delete remote tag
+   git tag -d vX.Y.Z                # Delete local tag
    ```
 
 3. **Create hotfix**:
    - Fix the critical issue
    - Follow this checklist again for patch release (X.Y.Z+1)
    - Note the fix in version history
+   - Push tag to trigger automated publish via GitHub Actions
 
-**Note:** Cannot unpublish from npm after 72 hours. Use deprecation instead.
+**Notes:**
+- Cannot unpublish from npm after 72 hours. Use deprecation instead.
+- If GitHub Actions workflow failed, no npm publish occurred - just fix and re-push the tag
+- To re-trigger workflow: delete and recreate the tag, or create a new patch version
+
+## Troubleshooting GitHub Actions Workflow
+
+If the automated publish workflow fails:
+
+1. **Check the workflow logs**:
+   - Visit: https://github.com/MichaelvanLaar/n8n-nodes-defuddle/actions
+   - Click the failed workflow run
+   - Review logs to identify the failure point
+
+2. **Common failure scenarios**:
+   - **Build fails**: Fix TypeScript errors, run `npm run build` locally first
+   - **Lint fails**: Fix linting errors, run `npm run lint` locally first
+   - **Tests fail**: Fix test failures, run `npm test` locally first
+   - **Publish fails**: Check npm OIDC configuration, verify package name/scope
+
+3. **Fix and retry**:
+   ```bash
+   # Fix the issue locally and test
+   npm run build && npm run lint && npm test
+
+   # Delete the tag (local and remote)
+   git tag -d vX.Y.Z
+   git push --delete origin vX.Y.Z
+
+   # Create a new patch version (or recreate same tag if no code changes)
+   npm version patch  # Creates new version
+   # OR
+   git tag vX.Y.Z     # Recreate same tag if just fixing workflow
+
+   # Push again to trigger workflow
+   git push --tags
+   ```
 
 ---
 
@@ -288,8 +317,8 @@ npm run build         # Build for production
 git add README.md     # Stage documentation
 git commit -m "..."   # Commit documentation updates
 npm version minor     # Bump version (patch/minor/major)
-npm publish           # Publish to npm (includes prepublishOnly)
-git push --tags       # Push commits and tags
+git push --tags       # Push commits and tags (triggers automated publish)
+# Monitor GitHub Actions workflow at /actions
 gh release create...  # Create GitHub release
 ```
 
@@ -302,8 +331,11 @@ gh release create...  # Create GitHub release
 ## Important Notes
 
 - **Pre-commit hooks** run lint → test → build before every commit (via Husky)
-- **prepublishOnly hook** runs build + lint + test before publishing to npm
-- **All 47 tests must pass** before release (enforced by hooks)
+- **Automated publishing** via GitHub Actions when version tags are pushed (no manual `npm publish`)
+- **OIDC authentication** with npm Trusted Publishers (no npm token in secrets)
+- **Provenance attestations** automatically generated for published packages (cryptographic proof of build source)
+- **GitHub Actions workflow** runs build → lint → test → publish (same as prepublishOnly, but in CI)
+- **All 47 tests must pass** before release (enforced by hooks and CI)
 - **README.md must be updated BEFORE `npm version`** (npm version creates commit automatically)
 - Use **same changelog text** in README.md and GitHub release for consistency
 - Follow **semantic versioning**: https://semver.org/

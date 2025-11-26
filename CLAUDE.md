@@ -98,7 +98,7 @@ This checklist covers the complete release workflow including:
 - Version determination (semantic versioning guide)
 - Documentation updates (README.md version history)
 - Testing & QA (unit tests, coverage, manual testing in n8n)
-- Publishing to npm (with prepublishOnly hooks)
+- Automated publishing to npm (via GitHub Actions with OIDC)
 - GitHub release creation
 - Post-release verification
 - Rollback procedures (if needed)
@@ -108,8 +108,8 @@ This checklist covers the complete release workflow including:
 1. **Update README.md** - Add the new version section to "Version History" with complete changelog
 2. **Commit README changes** - Commit the README update before bumping version
 3. **Bump version** - Use `npm version patch|minor|major` (this updates package.json, package-lock.json, and creates a git commit + tag automatically)
-4. **Publish to npm** - Run `npm publish` (this runs prepublishOnly hook: build + lint + test)
-5. **Push to GitHub** - Run `git push && git push --tags` to push commits and the version tag
+4. **Push to GitHub** - Run `git push && git push --tags` to push commits and the version tag (this automatically triggers the GitHub Actions publish workflow)
+5. **Monitor workflow** - Watch the automated build → lint → test → publish process at github.com/.../actions
 6. **Create GitHub release** - Use `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` with the same changelog text from README.md
 
 **Files that must be updated:**
@@ -117,14 +117,18 @@ This checklist covers the complete release workflow including:
 - `README.md` - Add version section to "Version History" (do this FIRST, before version bump)
 - `package.json` and `package-lock.json` - Automatically updated by `npm version`
 
+**Publishing:**
+
+- **Automated via GitHub Actions** - Pushing a version tag triggers `.github/workflows/publish.yml`
+- **OIDC authentication** - Uses npm Trusted Publishers (no npm token in secrets)
+- **Provenance attestations** - Cryptographic proof that the package was built in GitHub Actions
+- Workflow runs: `build → lint → test → npm publish --provenance --access public`
+
 **Note:**
 
 - The `npm version` command automatically creates a git commit and tag, so commit README.md changes BEFORE running it
 - Always use the same changelog text in both README.md and the GitHub release description for consistency
-
-```bash
-npm run prepublishOnly # Runs before publishing (build + lint + test)
-```
+- No manual `npm publish` needed - fully automated via GitHub Actions when tags are pushed
 
 ## Architecture
 
