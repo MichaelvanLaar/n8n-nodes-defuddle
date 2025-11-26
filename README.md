@@ -249,7 +249,11 @@ Avoid using it for:
 
 ## Version History
 
-### 0.3.0 (Upcoming)
+### 0.3.1 (Upcoming)
+
+(No changes yet)
+
+### 0.3.0
 
 - Add comprehensive Jest testing infrastructure
   - 47 test cases covering all node features
@@ -264,6 +268,10 @@ Avoid using it for:
 - Update publishing workflow to include automated testing (prepublishOnly now runs: build + lint + test)
 - Add testing documentation to README.md and CLAUDE.md
 - Update project.md with comprehensive testing strategy
+
+### 0.2.6
+
+- Security: Force form-data to patched version 4.0.4+ via npm overrides to address prototype pollution vulnerability
 
 ### 0.2.5
 
