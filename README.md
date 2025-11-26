@@ -249,29 +249,30 @@ Avoid using it for:
 
 ## Version History
 
-### 0.3.1 (Upcoming)
+### 0.2.7 (Upcoming)
 
 (No changes yet)
 
-### 0.3.0
+### 0.2.6
 
-- Add comprehensive Jest testing infrastructure
-  - 47 test cases covering all node features
+- **Security**: Force form-data to patched version 4.0.4+ via npm overrides to address prototype pollution vulnerability
+- **New Feature**: Add Context7 MCP integration with `/n8n-docs` slash command for accessing n8n documentation
+- **Testing Infrastructure**: Add comprehensive Jest testing with 47 test cases (~100% coverage)
   - Feature tests: content extraction, format conversion, output filtering, Defuddle options
   - Security tests: JSDOM sandboxing, script blocking, XSS prevention
   - Error handling tests: missing input, invalid HTML, continueOnFail behavior
   - Edge case tests: large documents, Unicode, malformed HTML, empty content
   - Integration tests: IExecuteFunctions mocking, batch processing, pairedItem indexing
-- Add Husky pre-commit hooks
-  - Automatically run lint → test → build before each commit
-  - Prevent broken code from entering repository
-- Update publishing workflow to include automated testing (prepublishOnly now runs: build + lint + test)
-- Add testing documentation to README.md and CLAUDE.md
-- Update project.md with comprehensive testing strategy
-
-### 0.2.6
-
-- Security: Force form-data to patched version 4.0.4+ via npm overrides to address prototype pollution vulnerability
+- **Quality Assurance**: Add Husky pre-commit hooks (lint → test → build)
+- **Dependency Updates**:
+  - n8n-workflow: updated to 1.115.0
+  - Development dependencies updated to latest versions
+- **Documentation**:
+  - Add comprehensive release checklist (.claude/release-checklist.md)
+  - Add OpenSpec documentation system for tracking changes
+  - Add Conventional Commits and gitmoji guidelines
+  - Archive completed OpenSpec changes
+- **Development Workflow**: Update prepublishOnly to include automated testing (build + lint + test)
 
 ### 0.2.5
 
