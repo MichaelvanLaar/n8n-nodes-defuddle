@@ -1,199 +1,44 @@
-
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+n8n community node — extracts main content from webpages using the Defuddle library.
+Published as `@michaelvanlaar/n8n-nodes-defuddle` on npm.
 
-## Project Overview
+## Stack
 
-This is an n8n community node package that extracts main content from webpages using the [Defuddle](https://github.com/kepano/defuddle) library. It provides a single node that processes HTML input and returns cleaned, readable content (similar to browser reader mode).
-
-**Requirements:**
-
-- Node.js 20 or higher (enforced via `engines` in package.json)
-- n8n version 1.20.0 or above
-
-## Build and Development Commands
-
-### Building
-
-```bash
-npm run build          # Compile TypeScript and copy icons to dist/
-npm run dev            # Watch mode for TypeScript compilation
-```
-
-The build process consists of two steps:
-
-1. `tsc` - Compiles TypeScript from `nodes/**/*.ts` to `dist/`
-2. `gulp build:icons` - Copies SVG/PNG icons from `nodes/` to `dist/nodes/`
-
-### Linting and Formatting
-
-```bash
-npm run lint           # Check TypeScript files for errors
-npm run lintfix        # Auto-fix linting issues
-npm run format         # Format code with Prettier
-```
-
-### Testing
-
-```bash
-npm test               # Run test suite with Jest
-npm run test:watch     # Run tests in watch mode for development
-npm run test:coverage  # Generate coverage report
-```
-
-**Testing Strategy:**
-
-- **Framework**: Jest with ts-jest for TypeScript support
-- **Location**: Tests are co-located with node code in `nodes/Defuddle/__tests__/`
-- **Fixtures**: HTML test files in `nodes/Defuddle/__tests__/fixtures/`
-- **Coverage Target**: >80% code coverage
-- **Pre-commit Hooks**: Husky automatically runs lint → test → build before each commit
-
-**Test Categories:**
-
-1. **Feature Tests**: Content extraction, format conversion (HTML/Markdown), output filtering, Defuddle options
-2. **Security Tests**: JSDOM sandboxing, script blocking, XSS prevention
-3. **Error Handling Tests**: Missing input, invalid HTML, continueOnFail behavior
-4. **Edge Cases**: Large documents, Unicode, malformed HTML, empty content
-5. **Integration Tests**: IExecuteFunctions mocking, multiple items processing, pairedItem behavior
-
-**Testing Conventions:**
-
-- All node features must have corresponding tests
-- Use fixtures for HTML test data (easier to maintain than inline strings)
-- Mock IExecuteFunctions manually for precise control over test scenarios
-- Security-critical features (JSDOM sandboxing) must have dedicated test coverage
-
-### Publishing
-
-**IMPORTANT:** When ready to publish a new version, use the comprehensive release checklist:
-
-**See: `.claude/release-checklist.md`**
-
-This checklist covers the complete release workflow including:
-
-- Pre-release verification (tests, linting, security audit)
-- Version determination (semantic versioning guide)
-- Documentation updates (README.md version history)
-- Testing & QA (unit tests, coverage, manual testing in n8n)
-- Automated publishing to npm (via GitHub Actions with OIDC)
-- GitHub release creation
-- Post-release verification
-- Rollback procedures (if needed)
-
-**Quick Reference Workflow:**
-
-1. **Update README.md** - Add the new version section to "Version History" with complete changelog
-2. **Commit README changes** - Commit the README update before bumping version
-3. **Bump version** - Use `npm version patch|minor|major` (this updates package.json, package-lock.json, and creates a git commit + tag automatically)
-4. **Push to GitHub** - Run `git push && git push --tags` to push commits and the version tag (this automatically triggers the GitHub Actions publish workflow)
-5. **Monitor workflow** - Watch the automated build → lint → test → publish process at github.com/.../actions
-6. **Create GitHub release** - Use `gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."` with the same changelog text from README.md
-
-**Files that must be updated:**
-
-- `README.md` - Add version section to "Version History" (do this FIRST, before version bump)
-- `package.json` and `package-lock.json` - Automatically updated by `npm version`
-
-**Publishing:**
-
-- **Automated via GitHub Actions** - Pushing a version tag triggers `.github/workflows/publish.yml`
-- **OIDC authentication** - Uses npm Trusted Publishers (no npm token in secrets)
-- **Provenance attestations** - Cryptographic proof that the package was built in GitHub Actions
-- Workflow runs: `build → lint → test → npm publish --provenance --access public`
-
-**Note:**
-
-- The `npm version` command automatically creates a git commit and tag, so commit README.md changes BEFORE running it
-- Always use the same changelog text in both README.md and the GitHub release description for consistency
-- No manual `npm publish` needed - fully automated via GitHub Actions when tags are pushed
+TypeScript 5.9, Node.js 20+, n8n-workflow ^1.20.0, Defuddle, JSDOM, Turndown, Jest, Husky, ESLint/Prettier.
 
 ## Architecture
 
-### Node Structure
+Single-node package: `nodes/Defuddle/Defuddle.node.ts`.
+HTML input → sandboxed JSDOM → Defuddle extraction → optional Turndown markdown conversion → filtered JSON output.
+Build output to `dist/`; only `dist/` is published to npm.
 
-The package follows n8n's community node architecture:
+@openspec/project.md for full architecture, conventions, and domain context.
+@AGENTS.md for universal agent brief (setup, testing, safety rules).
 
-- **Single Node Implementation**: `nodes/Defuddle/Defuddle.node.ts` - The main (and only) node
-- **Icon**: `nodes/Defuddle/defuddle.svg` - Node icon displayed in n8n UI
-- **Build Output**: All compiled code goes to `dist/` directory
-- **Package Entry**: `dist/nodes/Defuddle/Defuddle.node.js` (specified in package.json `n8n.nodes`)
+## Key Commands
 
-### Key Dependencies
+- `npm run build` — compile TypeScript + copy icons
+- `npm run lint` / `npm run lintfix` — ESLint with n8n rules
+- `npm test` / `npm run test:watch` / `npm run test:coverage` — Jest (47 tests, ~100% coverage)
+- `npm run dev` — TypeScript watch mode
 
-- **defuddle** (^0.6.6): Core content extraction library
-- **jsdom** (^27.0.0): Provides sandboxed DOM environment for parsing HTML (requires Node.js 20+)
-- **turndown** (^7.2.1): Converts HTML to Markdown format
-- **n8n-workflow** (^1.20.0): n8n SDK for node development (peer dependency)
+## Key Conventions
 
-**Dev Dependencies:**
+- Conventional Commits with gitmoji.
+- Strict TypeScript — no `any` types.
+- `--legacy-peer-deps` required when updating dependencies (jsdom peer dep mismatch).
+- Pre-commit hooks (Husky): lint → test → build.
 
-- **TypeScript** (^5.9.3): Upgraded from 4.9 for better performance and type checking
-- **ESLint** (^9.37.0): Uses flat config format (`eslint.config.mjs`)
-- **typescript-eslint** (^8.45.0): ESLint plugin for TypeScript
-- **Prettier** (^3.6.2): Code formatting
-- **gulp** (^5.0.1): Build task runner (requires `{encoding: false}` for binary files)
+## Publishing
 
-### Node Execution Flow
+@.claude/release-checklist.md
 
-1. Accepts HTML input (typically from HTTP Request node via `{{$json.data}}`)
-2. Creates sandboxed JSDOM instance (scripts disabled, no external resources)
-3. Passes DOM to Defuddle parser with user-configured options
-4. Optionally converts HTML content to Markdown using Turndown
-5. Filters output fields based on user selection
-6. Returns structured JSON with extracted content and metadata
+## GitHub Integration
 
-### Content Format Options
+- Automated npm publishing via GitHub Actions when version tags are pushed (OIDC, provenance).
 
-The node supports three output modes controlled by `contentFormat` parameter:
+## OpenSpec
 
-- `html`: Returns content as HTML (default)
-- `markdown`: Converts content to Markdown (replaces `content` field)
-- `both`: Returns both HTML in `content` and Markdown in `contentMarkdown`
-
-### Security Considerations
-
-JSDOM is configured with security hardening:
-
-- `runScripts: undefined` - Never execute JavaScript
-- `resources: undefined` - Block external resource loading
-- `pretendToBeVisual: false` - Minimal parsing overhead
-
-## TypeScript Configuration
-
-- **Target**: ES2019
-- **Module**: CommonJS (required for n8n)
-- **Strict mode**: Enabled
-- **Source**: `nodes/**/*`
-- **Output**: `dist/`
-
-## ESLint Configuration
-
-Uses **ESLint 9 flat config** format in `eslint.config.mjs`:
-
-- Based on TypeScript ESLint recommended type-checked rules
-- Includes `plugin:n8n-nodes-base/community` rules:
-  - `node-dirname-against-convention`: Enforces n8n directory naming
-  - `node-class-description-inputs-wrong-regular-node`: Validates input configuration
-  - `node-class-description-outputs-wrong`: Validates output configuration
-  - `node-filename-against-convention`: Enforces n8n file naming
-- Custom rule: `@typescript-eslint/require-await` disabled (n8n nodes must return Promise even without await)
-- Ignores: `**/*.js` files, `node_modules`, `dist`
-
-**Note:** When updating dependencies, use `--legacy-peer-deps` flag due to jsdom peer dependency mismatch with defuddle.
-
-## n8n Node Standards
-
-This package must comply with n8n community node requirements:
-
-- Nodes must implement `INodeType` interface
-- Class name should match the node name in description
-- File naming: `{NodeName}.node.ts`
-- Directory naming: `nodes/{NodeName}/`
-- Icons placed alongside node file
-- Package metadata in `package.json` under `n8n` key
-
-## Notes
-
-- Always use Conventional Commits and gitmoji when creating git commit messages.
+This project uses OpenSpec for structured change management.
+See `openspec/config.yaml` for workflow configuration.
