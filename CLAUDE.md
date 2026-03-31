@@ -13,8 +13,11 @@ Single-node package: `nodes/Defuddle/Defuddle.node.ts`.
 HTML input → sandboxed JSDOM → Defuddle extraction → optional Turndown markdown conversion → filtered JSON output.
 Build output to `dist/`; only `dist/` is published to npm.
 
-@openspec/project.md for full architecture, conventions, and domain context.
 @AGENTS.md for universal agent brief (setup, testing, safety rules).
+
+### Full Project Context — @openspec/project.md
+
+**Read when:** needing full architecture details, domain context, dependency info, or n8n API constraints.
 
 ## Key Commands
 
@@ -30,9 +33,9 @@ Build output to `dist/`; only `dist/` is published to npm.
 - `--legacy-peer-deps` required when updating dependencies (jsdom peer dep mismatch).
 - Pre-commit hooks (Husky): lint → test → build.
 
-## Publishing
+## Publishing — @.claude/release-checklist.md
 
-@.claude/release-checklist.md
+**Read when:** publishing a new version, running release workflow, or bumping version numbers.
 
 ## GitHub Integration
 
@@ -42,3 +45,7 @@ Build output to `dist/`; only `dist/` is published to npm.
 
 This project uses OpenSpec for structured change management.
 See `openspec/config.yaml` for workflow configuration.
+
+## Compact Instructions
+
+When compacting, preserve: list of modified files, current test status (pass/fail count), open TODOs, key architectural decisions made, and any active OpenSpec change context.

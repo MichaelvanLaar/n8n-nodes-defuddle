@@ -1,7 +1,6 @@
 ---
-name: Context7: n8n
+name: "context7:n8n"
 description: Pull n8n documentation for context
-category: Context7
 tags: [context7, n8n, documentation]
 ---
 
@@ -23,12 +22,3 @@ You are working on an n8n community node project. The user wants additional cont
 - Use `resolve-library-id` to find the correct library ID if needed
 - Use `get-library-docs` with the resolved library ID
 - Set appropriate token limits based on the scope (5000-10000 tokens for specific topics, 3000-5000 for general context)
-
-**Note:** This command is designed to be used when:
-- Developing or maintaining n8n community nodes
-- Working with n8n APIs (IExecuteFunctions, INodeType, INodeProperties, etc.)
-- Troubleshooting node-related issues
-- Implementing node features that need API verification
-- Understanding n8n conventions, best practices, or node structure
-- Working with credentials, webhooks, or polling triggers
-- Checking for API changes or updated patterns
