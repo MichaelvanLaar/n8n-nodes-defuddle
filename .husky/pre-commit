@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Keep CLAUDE.md config file table in sync
+bash scripts/sync-config-table.sh
+
 # Pre-commit hook: Run lint → test → build
 # Fast-fail order: lint (fastest) → test (medium) → build (slowest)
 echo "Running pre-commit checks..."

@@ -19,6 +19,42 @@ Build output to `dist/`; only `dist/` is published to npm.
 
 **Read when:** needing full architecture details, domain context, dependency info, or n8n API constraints.
 
+### Key Config Files
+
+| File | Purpose |
+|------|---------|
+| `.claude/release-checklist.md` | Release process checklist  |
+| `.claude/settings.json` | Claude Code permissions and hooks  |
+| `.claude/settings.local.json` | Local Claude Code overrides (gitignored)  |
+| `.claude/skills/cc-init/SKILL.md` | TODO: add description |
+| `.claude/skills/cc-optimize/SKILL.md` | TODO: add description |
+| `.claude/skills/context7-n8n/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-apply-change/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-archive-change/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-bulk-archive-change/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-continue-change/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-explore/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-ff-change/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-new-change/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-onboard/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-sync-specs/SKILL.md` | TODO: add description |
+| `.claude/skills/openspec-verify-change/SKILL.md` | TODO: add description |
+| `eslint.config.mjs` | ESLint flat config with n8n rules  |
+| `.github/workflows/claude-code-review.yml` | Automatic PR review by Claude  |
+| `.github/workflows/claude.yml` | Claude automation via `@claude` in issues/PRs  |
+| `.github/workflows/publish.yml` | npm publish on git tag push (OIDC)  |
+| `.gitignore` | Git ignore patterns  |
+| `gulpfile.js` | Gulp build tasks (icon copying)  |
+| `jest.config.js` | Jest test configuration  |
+| `.mcp.json` | MCP server config  |
+| `package.json` | Package metadata, dependencies, scripts  |
+| `.prettierrc.js` | Prettier formatting rules  |
+| `tsconfig.json` | TypeScript compiler config  |
+
+## Configuration Management
+
+When running config optimization or audit tasks, always check for duplicate entries across `.claude/settings.json`, `.claude/settings.local.json`, and project-level configs before proposing changes.
+
 ## Key Commands
 
 - `npm run build` — compile TypeScript + copy icons
@@ -48,4 +84,3 @@ See `openspec/config.yaml` for workflow configuration.
 
 ## Compact Instructions
 
-When compacting, preserve: list of modified files, current test status (pass/fail count), open TODOs, key architectural decisions made, and any active OpenSpec change context.
