@@ -82,5 +82,11 @@ When running config optimization or audit tasks, always check for duplicate entr
 This project uses OpenSpec for structured change management.
 See `openspec/config.yaml` for workflow configuration.
 
+## Handoff
+
+Before ending a session, the user may invoke `/handoff` to create a machine-transfer summary.
+When resuming work, always check if HANDOFF.md exists in the project root. If it does, read it
+first and continue from where it left off. After confirming the context is restored, delete the file.
+
 ## Compact Instructions
 
