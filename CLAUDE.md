@@ -88,5 +88,10 @@ Before ending a session, the user may invoke `/handoff` to create a machine-tran
 When resuming work, always check if HANDOFF.md exists in the project root. If it does, read it
 first and continue from where it left off. After confirming the context is restored, delete the file.
 
+## Learnings
+
+When the user corrects a mistake or points out a recurring issue, append a one-line
+summary to .claude/learnings.md. Don't modify CLAUDE.md directly.
+
 ## Compact Instructions
 
