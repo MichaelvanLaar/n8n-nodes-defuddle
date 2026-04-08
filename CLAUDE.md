@@ -26,19 +26,19 @@ Build output to `dist/`; only `dist/` is published to npm.
 | `.claude/release-checklist.md` | Release process checklist  |
 | `.claude/settings.json` | Claude Code permissions and hooks  |
 | `.claude/settings.local.json` | Local Claude Code overrides (gitignored)  |
-| `.claude/skills/cc-init/SKILL.md` | TODO: add description |
-| `.claude/skills/cc-optimize/SKILL.md` | TODO: add description |
-| `.claude/skills/context7-n8n/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-apply-change/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-archive-change/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-bulk-archive-change/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-continue-change/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-explore/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-ff-change/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-new-change/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-onboard/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-sync-specs/SKILL.md` | TODO: add description |
-| `.claude/skills/openspec-verify-change/SKILL.md` | TODO: add description |
+| `.claude/skills/cc-init/SKILL.md` | Bootstrap best-practice Claude Code config for new projects  |
+| `.claude/skills/cc-optimize/SKILL.md` | Audit and optimize existing Claude Code configuration  |
+| `.claude/skills/context7-n8n/SKILL.md` | Fetch n8n documentation via context7 for current API reference  |
+| `.claude/skills/openspec-apply-change/SKILL.md` | Implement tasks from an active OpenSpec change  |
+| `.claude/skills/openspec-archive-change/SKILL.md` | Archive a completed OpenSpec change and sync specs  |
+| `.claude/skills/openspec-bulk-archive-change/SKILL.md` | Archive multiple completed OpenSpec changes at once  |
+| `.claude/skills/openspec-continue-change/SKILL.md` | Create the next artifact for an in-progress OpenSpec change  |
+| `.claude/skills/openspec-explore/SKILL.md` | Thinking-partner mode for exploring ideas before a change  |
+| `.claude/skills/openspec-ff-change/SKILL.md` | Fast-forward through all OpenSpec artifact creation in one pass  |
+| `.claude/skills/openspec-new-change/SKILL.md` | Start a new OpenSpec change with structured artifact workflow  |
+| `.claude/skills/openspec-onboard/SKILL.md` | Guided walkthrough of a complete OpenSpec workflow cycle  |
+| `.claude/skills/openspec-sync-specs/SKILL.md` | Sync delta specs to main specs without archiving the change  |
+| `.claude/skills/openspec-verify-change/SKILL.md` | Verify implementation matches change artifacts before archiving  |
 | `eslint.config.mjs` | ESLint flat config with n8n rules  |
 | `.github/workflows/claude-code-review.yml` | Automatic PR review by Claude  |
 | `.github/workflows/claude.yml` | Claude automation via `@claude` in issues/PRs  |
@@ -95,3 +95,4 @@ summary to .claude/learnings.md. Don't modify CLAUDE.md directly.
 
 ## Compact Instructions
 
+When compacting, preserve: full list of modified files, current test status, and open TODOs.
