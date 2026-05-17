@@ -23,31 +23,31 @@ Build output to `dist/`; only `dist/` is published to npm.
 
 | File | Purpose |
 |------|---------|
-| `.claude/release-checklist.md` | Release process checklist   |
-| `.claude/settings.json` | Claude Code permissions and hooks   |
-| `.claude/skills/context7-n8n/SKILL.md` | Fetch n8n documentation via context7 for current API reference   |
-| `.claude/skills/openspec-apply-change/SKILL.md` | Implement tasks from an active OpenSpec change   |
-| `.claude/skills/openspec-archive-change/SKILL.md` | Archive a completed OpenSpec change and sync specs   |
-| `.claude/skills/openspec-bulk-archive-change/SKILL.md` | Archive multiple completed OpenSpec changes at once   |
-| `.claude/skills/openspec-continue-change/SKILL.md` | Create the next artifact for an in-progress OpenSpec change   |
-| `.claude/skills/openspec-explore/SKILL.md` | Thinking-partner mode for exploring ideas before a change   |
-| `.claude/skills/openspec-ff-change/SKILL.md` | Fast-forward through all OpenSpec artifact creation in one pass   |
-| `.claude/skills/openspec-new-change/SKILL.md` | Start a new OpenSpec change with structured artifact workflow   |
-| `.claude/skills/openspec-onboard/SKILL.md` | Guided walkthrough of a complete OpenSpec workflow cycle   |
-| `.claude/skills/openspec-sync-specs/SKILL.md` | Sync delta specs to main specs without archiving the change   |
-| `.claude/skills/openspec-verify-change/SKILL.md` | Verify implementation matches change artifacts before archiving   |
-| `eslint.config.mjs` | ESLint flat config with n8n rules   |
-| `.github/workflows/claude-code-review.yml` | Automatic PR review by Claude   |
-| `.github/workflows/claude.yml` | Claude automation via `@claude` in issues/PRs   |
-| `.github/workflows/publish.yml` | npm publish on git tag push (OIDC)   |
-| `.github/workflows/test.yml` | TODO: add description |
-| `.gitignore` | Git ignore patterns   |
-| `gulpfile.js` | Gulp build tasks (icon copying)   |
-| `jest.config.js` | Jest test configuration   |
-| `.mcp.json` | MCP server config   |
-| `package.json` | Package metadata, dependencies, scripts   |
-| `.prettierrc.js` | Prettier formatting rules   |
-| `tsconfig.json` | TypeScript compiler config   |
+| `.claude/release-checklist.md` | Release process checklist    |
+| `.claude/settings.json` | Claude Code permissions and hooks    |
+| `.claude/skills/context7-n8n/SKILL.md` | Fetch n8n documentation via context7 for current API reference    |
+| `.claude/skills/openspec-apply-change/SKILL.md` | Implement tasks from an active OpenSpec change    |
+| `.claude/skills/openspec-archive-change/SKILL.md` | Archive a completed OpenSpec change and sync specs    |
+| `.claude/skills/openspec-bulk-archive-change/SKILL.md` | Archive multiple completed OpenSpec changes at once    |
+| `.claude/skills/openspec-continue-change/SKILL.md` | Create the next artifact for an in-progress OpenSpec change    |
+| `.claude/skills/openspec-explore/SKILL.md` | Thinking-partner mode for exploring ideas before a change    |
+| `.claude/skills/openspec-ff-change/SKILL.md` | Fast-forward through all OpenSpec artifact creation in one pass    |
+| `.claude/skills/openspec-new-change/SKILL.md` | Start a new OpenSpec change with structured artifact workflow    |
+| `.claude/skills/openspec-onboard/SKILL.md` | Guided walkthrough of a complete OpenSpec workflow cycle    |
+| `.claude/skills/openspec-sync-specs/SKILL.md` | Sync delta specs to main specs without archiving the change    |
+| `.claude/skills/openspec-verify-change/SKILL.md` | Verify implementation matches change artifacts before archiving    |
+| `eslint.config.mjs` | ESLint flat config with n8n rules    |
+| `.github/workflows/claude-code-review.yml` | Automatic PR review by Claude    |
+| `.github/workflows/claude.yml` | Claude automation via `@claude` in issues/PRs    |
+| `.github/workflows/publish.yml` | npm publish on git tag push (OIDC)    |
+| `.github/workflows/test.yml` | TODO: add description  |
+| `.gitignore` | Git ignore patterns    |
+| `gulpfile.js` | Gulp build tasks (icon copying)    |
+| `jest.config.js` | Jest test configuration    |
+| `.mcp.json` | MCP server config    |
+| `package.json` | Package metadata, dependencies, scripts    |
+| `.prettierrc.js` | Prettier formatting rules    |
+| `tsconfig.json` | TypeScript compiler config    |
 
 ## Configuration Management
 
